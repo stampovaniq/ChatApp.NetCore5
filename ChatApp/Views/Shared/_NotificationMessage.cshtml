@@ -1,0 +1,20 @@
+﻿@model INotification
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.DisplayFor(model => model.NotificationMessage, new { @class = "control-label" })
+    </div>
+}
+else
+{
+    @if (Model != null && Model.MessageType != EnumMessageType.Undefined)
+    {
+
+        string messageType = (Model.MessageType == EnumMessageType.Success) ? "alert alert-success" : "alert alert-warning";
+        <div class="@messageType" role="alert">
+            @Html.DisplayFor(model => model.NotificationMessage, new { @class = "control-label" })
+        </div>
+    }
+
+}

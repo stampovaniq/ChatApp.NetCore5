@@ -1,0 +1,26 @@
+﻿@{
+    //isAllowed if i want to hide something from normal users and to be visible only for administrators
+    bool isAllowed = (await AuthorizationService.AuthorizeAsync(User, Context, Enum.GetName(typeof(EnumApplicationPolicy), EnumApplicationPolicy.AdministratorRoleGroup))).Succeeded;
+
+    navigationPage.Title = "Home";
+    string returnUrl = Url.Action(nameof(HomeController.Index), navigationPage.Controller<HomeController>());
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut" asp-route-returnUrl="@returnUrl">Log Out</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Chat" asp-controller="Chat" asp-action="Index" >Chat Rooms</a>
+            </li>
+        </ul>
+    </div>
+}

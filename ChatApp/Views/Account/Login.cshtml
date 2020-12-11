@@ -1,0 +1,66 @@
+﻿@model AuthenticationViewModel
+@{
+    navigationPage.Title = "Login";
+    string controllerName = navigationPage.Controller<AccountController>();
+    string loginActionName = nameof(AccountController.Login);
+    string registerActionName = nameof(AccountController.Register);
+}
+
+<div class="container">
+    @{ await Html.RenderPartialAsync("_NotificationMessage", Model); }
+
+    <form asp-controller="@controllerName" asp-action="@loginActionName" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+        @Html.AntiForgeryToken()
+        <div class="row justify-content-center">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Login
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-start">
+                            <div class="col-sm-4">
+                                @Html.LabelFor(model => model.UserName, new { @class = "control-label" })
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.UserName, new { placeholder = "User Name" })
+                                    @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-start">
+                            <div class="col-sm-4">
+                                @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", @type = "password" })
+                                    @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger small" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-start">
+                            <div class="col-sm-6">
+                                <a asp-action="@registerActionName" asp-controller="@controllerName">Sign Up</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-outline-success"><span class="glyphicon glyphicon-log-in">&nbsp;</span>Log in</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

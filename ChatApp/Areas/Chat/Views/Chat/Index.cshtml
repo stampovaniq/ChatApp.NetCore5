@@ -1,0 +1,31 @@
+﻿@model ChatViewModel
+@{
+    navigationPage.Title = "Chat";
+    string controllerName = navigationPage.Controller<ChatController>();
+    string sendActionName = nameof(ChatController.Index);
+}
+
+<div class="container">
+    <form asp-controller="@controllerName" asp-action="@sendActionName" method="post" class="form-horizontal" onsubmit="return false;"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-update="#ajaxresult"
+    >
+
+        <div id="ajaxresult">
+            @await Html.PartialAsync("_ChatBox", Model)
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-12">
+            <hr /><hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <ul id="messageList"></ul>
+        </div>
+    </div>
+
+</div>
